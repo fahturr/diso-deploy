@@ -7,6 +7,7 @@ install:
 	docker compose exec app php artisan storage:link
 	docker compose exec app php artisan init --prod
 	docker compose exec app chmod -R 777 storage bootstrap/cache
+	docker compose exec app npm install
 	docker compose exec app npm run build
 	@make fresh
 create-project:
