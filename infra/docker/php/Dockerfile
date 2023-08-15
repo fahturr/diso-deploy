@@ -34,7 +34,8 @@ RUN apt-get update \
     zip \
     bcmath \
   && composer config -g process-timeout 3600 \
-  && composer config -g repos.packagist composer https://packagist.org
+  && composer config -g repos.packagist composer https://packagist.org \
+  && apt-get install -y nodejs  
 
 FROM base AS development
 
@@ -51,9 +52,6 @@ FROM base AS deploy
 
 COPY ./infra/docker/php/php.deploy.ini /usr/local/etc/php/php.ini
 COPY ./src /workspace
-
-RUN npm install \
-  && npm run build
 
 RUN composer install -q -n --no-ansi --no-dev --no-scripts --no-progress --prefer-dist \
   && chmod -R 777 storage bootstrap/cache \
